@@ -3,7 +3,8 @@ MAINTAINER Kentaro Imajo <github@imoz.jp>
 
 ENV URL     https://github.com/h2o/h2o.git
 ENV VERSION v2.2.6
-ENV BUILD_OPTIONS -DCMAKE_INSTALL_SYSCONFDIR=/etc/h2o -DWITH_MRUBY=off
+ENV BUILD_OPTIONS -DCMAKE_INSTALL_SYSCONFDIR=/etc/h2o \
+    -DWITH_MRUBY=off -DWITH_BUNDLED_SSL=on
 
 RUN apk update \
     && apk upgrade \
@@ -14,7 +15,7 @@ RUN apk update \
     && git clone $URL -b $VERSION --recursive --depth=1 --shallow-submodules \
     && cd h2o \
     && cmake $BUILD_OPTIONS \
-    && make \
+    && make -j $(nproc) \
     && make install \
     && strip h2o \
     && cp h2o /usr/sbin \
