@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.11
 MAINTAINER Kentaro Imajo <github@imoz.jp>
 
 ENV URL     https://github.com/h2o/h2o.git
